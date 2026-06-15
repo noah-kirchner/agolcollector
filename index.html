@@ -27,20 +27,52 @@
     <!-- Load modules -->
     <script>
         require(["esri/config" ,"esri/Map", "esri/views/MapView" ], (esriConfig, Map, MapView) => {
-            esriConfig.apiKey = 'AAPTahTxVFpq9q8MnwLiObY9CFA..GevNuz4SYr30TZAqUePx7AbFVJwzZ-75HZibp8q8X_hA6TPW8HykfyNv5UHSBrihV7wxRIuKMljM6Td7CGL-I-NoeohsNNN5-DscbLXxR160xjEKWljGwLKFTpbzjgKaCifG2LdFV6cjTrLyMfUN-QAwkcjGsxBAqrSoOkHtwm_Dp1Xq27w69mwKCTvvpkW7gCybTou8IRHbLRUoFRW1eICV-wSPJ2lBluUTLPvrOLmOa-qtmDDRDzd5yR7OMvH6f8I9I7fFzw..AT1_IMV5kkt8'
+            esriConfig.apiKey = 'AAPTahTxVFpq9q8MnwLiObY9CFA..GevNuz4SYr30TZAqUePx7AbFVJwzZ-75HZibp8q8X_hA6TPW8HykfyNv5UHSBrihV7wxRIuKMljM6Td7CGL-I-NoeohsNNN5-DscbLXxR160xjEKWljGwLKFTpbzjgKaCifG2LdFV6cjTrLyMfUN-QAwkcjGsxBAqrSoOkHtwm_Dp1Xq27w69mwKCTvvpkW7gCybTou8IRHbLRUoFRW1eICV-wSPJ2lBluUTLPvrOLmOa-qtmDDRDzd5yR7OMvH6f8I9I7fFzw..AT1_IMV5kkt8';
             
             const map = new Map({
                 basemap: "satellite"
             });
             const view = new MapView({
                 container: "viewDiv", // Reference to the DOM node that will contain the view
-                map: map // References the map object
+                map: map, // References the map object
+                center: [-77.0264, 38.9015], // Washington, DC
+                zoom: 14
+            });
+
+            // Load 'esri/widgets/expand'
+            const searchWidget = new Search({
+                view: view
+            });
+
+            // Wrap the search widget in the expand widget
+            const searchExpand = new Expand({
+                view: view,
+                content: searchWidget,
+                expandIcon: "search"
+            });
+
+            // Listen for errors on the Locate button
+            locateBtn.on("locate-error", (event) => {
+                console.error("Locate Widget Error:", event.error);
+                alert("Unable to find your location. Please check your phone's privacy settings or ensure your GPS signal is strong.");
+            });
+
+            // Catch errors when the layer fails to load
+            layer.load().catch((error) => {
+                console.error("FeatureLayer failed to load:", error);
+                alert("Notice: The survey data layer is temporarily unavailable. You can still add a record using the submission form.");
+            });
+
+            // Add the expand widget to the view instead of the search widget
+            view.ui.add(searchExpand, {
+                position: "top-left",
+                index: 0
             });
         });
     </script>
   </head>
   <body>
     <div id="viewDiv"></div>
-    <h1>Hello World! I am ready to collect data.</h1>
+    <h1>AGOL Collector</h1>
   </body>
 </html>
