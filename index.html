@@ -26,7 +26,7 @@
     
     <!-- Load modules -->
     <script>
-        require(["esri/config" ,"esri/Map", "esri/views/MapView" ], (esriConfig, Map, MapView) => {
+        require(["esri/config" ,"esri/Map", "esri/views/MapView", "esri/widgets/Locate"], (esriConfig, Map, MapView, Locate) => {
             esriConfig.apiKey = 'AAPTahTxVFpq9q8MnwLiObY9CFA..GevNuz4SYr30TZAqUePx7AbFVJwzZ-75HZibp8q8X_hA6TPW8HykfyNv5UHSBrihV7wxRIuKMljM6Td7CGL-I-NoeohsNNN5-DscbLXxR160xjEKWljGwLKFTpbzjgKaCifG2LdFV6cjTrLyMfUN-QAwkcjGsxBAqrSoOkHtwm_Dp1Xq27w69mwKCTvvpkW7gCybTou8IRHbLRUoFRW1eICV-wSPJ2lBluUTLPvrOLmOa-qtmDDRDzd5yR7OMvH6f8I9I7fFzw..AT1_IMV5kkt8';
             
             const map = new Map({
@@ -37,6 +37,15 @@
                 map: map, // References the map object
                 center: [-77.0264, 38.9015], // Washington, DC
                 zoom: 14
+            });
+            
+            const locateBtn = new Locate({
+            view: view
+            });
+
+            // Add the locate widget to the top left corner of the view
+            view.ui.add(locateBtn, {
+            position: "top-left"
             });
 
             // Load 'esri/widgets/expand'
