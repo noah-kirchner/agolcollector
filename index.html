@@ -18,6 +18,23 @@
         width: 100vw;
         overflow: hidden;
         }
+        .addRecordBtn {
+        position: absolute;
+        z-index: 12;
+        top: 16px;
+        right: 16px;
+        background-color: #5C7FA3;
+        color: white;
+        padding: 8px 16px;
+        border: none;
+        border-radius: 4px;
+        font-size: 18px;
+        cursor: pointer;
+        text-decoration: none;
+        }
+        .addRecordBtn:hover {
+        background-color: #5C7FA3;
+        }
     </style>
     
     <!-- Import CSS libraries for esri.js -->
@@ -26,7 +43,7 @@
     
     <!-- Load modules -->
     <script>
-        require(["esri/config" ,"esri/Map", "esri/views/MapView", "esri/widgets/Locate"], (esriConfig, Map, MapView, Locate) => {
+        require(["esri/config" ,"esri/Map", "esri/views/MapView", "esri/widgets/Locate", "esri/widgets/Search", "esri/widgets/Expand", "esri/layers/FeatureLayer"], (esriConfig, Map, MapView, Locate, Search, Expand, FeatureLayer) => {
             esriConfig.apiKey = 'AAPTahTxVFpq9q8MnwLiObY9CFA..GevNuz4SYr30TZAqUePx7AbFVJwzZ-75HZibp8q8X_hA6TPW8HykfyNv5UHSBrihV7wxRIuKMljM6Td7CGL-I-NoeohsNNN5-DscbLXxR160xjEKWljGwLKFTpbzjgKaCifG2LdFV6cjTrLyMfUN-QAwkcjGsxBAqrSoOkHtwm_Dp1Xq27w69mwKCTvvpkW7gCybTou8IRHbLRUoFRW1eICV-wSPJ2lBluUTLPvrOLmOa-qtmDDRDzd5yR7OMvH6f8I9I7fFzw..AT1_IMV5kkt8';
             
             const map = new Map({
@@ -42,6 +59,14 @@
             const locateBtn = new Locate({
             view: view
             });
+
+            // Create featurelayer from feature service 
+            const layer = new FeatureLayer({ 
+            // URL to the service 
+            url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/survey123_f66692db71504712b7f686c499a50e8a_results/FeatureServer"
+            });
+
+            map.add(layer);
 
             // Add the locate widget to the top left corner of the view
             view.ui.add(locateBtn, {
@@ -81,7 +106,7 @@
     </script>
   </head>
   <body>
+    <a href="https://survey123.arcgis.com/share/55a1dcb95cfe435a8b16cebfd83afef4"target="_blank" class="addRecordBtn">Add Record</a>
     <div id="viewDiv"></div>
-    <h1>AGOL Collector</h1>
   </body>
 </html>
